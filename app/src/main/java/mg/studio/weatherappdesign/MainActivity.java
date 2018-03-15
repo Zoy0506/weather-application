@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,16 +16,61 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    //获取时间日期  get the date
+    private static String mWay;
+    private static String mYear;
+    private static String mMonth;
+    private static String mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        Button refresh_but = (Button) findViewById(R.id.update);
+        final TextView xingqi = (TextView) findViewById(R.id.xingqi);
+        final TextView myDate = (TextView) findViewById(R.id.tv_date);
+        final TextView myCity = (TextView) findViewById(R.id.tv_location);
+        final TextView wendu = (TextView) findViewById(R.id.temperature_of_the_day);
+        refresh_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+                mYear = String.valueOf(c.get(Calendar.YEAR));                 // 获取当前年份     year
+                mMonth = String.valueOf(c.get(Calendar.MONTH) + 1);           // 获取当前月份     month
+                mDay = String.valueOf(c.get(Calendar.DAY_OF_MONTH));          // 获取当前月份的日期号码      day
+                mWay = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
+                if ("1".equals(mWay)) {
+                    xingqi.setText("SUNDAY");
+                } else if ("2".equals(mWay)) {
+                    xingqi.setText("MONDAY");
+                } else if ("3".equals(mWay)) {
+                    xingqi.setText("TUESDAY");
+                } else if ("4".equals(mWay)) {
+                    xingqi.setText("WENDNESDAY");
+                } else if ("5".equals(mWay)) {
+                    xingqi.setText("THURSDAY");
+                } else if ("6".equals(mWay)) {
+                    xingqi.setText("FRIDAY");
+                } else if ("7".equals(mWay)) {
+                    xingqi.setText("SATURDAY");
+                }
+                myDate.setText(mMonth + "/" + mDay + "/" + mYear);   //03/03/2018
+                myCity.setText("重庆");
+                new DownloadUpdate().execute();
+                //wendu.setText("19");
+                Toast.makeText(MainActivity.this, "Update successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
     public void btnClick(View view) {
         new DownloadUpdate().execute();
     }
