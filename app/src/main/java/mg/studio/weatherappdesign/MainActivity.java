@@ -3,6 +3,7 @@ package mg.studio.weatherappdesign;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView myDate = (TextView) findViewById(R.id.tv_date);
         final TextView myCity = (TextView) findViewById(R.id.tv_location);
         final TextView wendu = (TextView) findViewById(R.id.temperature_of_the_day);
+
         refresh_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 myDate.setText(mMonth + "/" + mDay + "/" + mYear);   //03/03/2018
                 myCity.setText("重庆");
-                new DownloadUpdate().execute();
+                getWeatherDatafromNet("101040100");
+
                 //wendu.setText("19");
                 Toast.makeText(MainActivity.this, "Update successfully", Toast.LENGTH_SHORT).show();
             }
@@ -133,4 +136,42 @@ public class MainActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.temperature_of_the_day)).setText(temperature);
         }
     }
+
+
+    private void getWeatherDatafromNet(String cityCode)
+    {
+
+        final String address = "http://wthrcdn.etouch.cn/WeatherApi?citykey="+cityCode;
+        Log.d("Address:",address);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final char a,b;
+                final TextView wendu = (TextView) findViewById(R.id.temperature_of_the_day);
+                HttpURLConnection urlConnection = null;
+                try {
+                    URL url = new URL(address);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    //urlConnection.setConnectTimeout(8000);
+                    //urlConnection.setReadTimeout(8000);
+                    InputStream in = urlConnection.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    StringBuffer sb = new StringBuffer();
+                    String str;
+                    str=reader.readLine();
+                    a = str.charAt(96);
+                    b = str.charAt(97);
+                    Log.d("读取", String.valueOf(a)+String.valueOf(b));
+
+                    wendu.setText(String.valueOf(a)+String.valueOf(b));
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
 }

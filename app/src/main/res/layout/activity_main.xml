@@ -206,13 +206,15 @@
                 app:srcCompat="@drawable/rainy_small" />
 
 
-            <mg.studio.weatherappdesign.MyCustomView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                custom:titleColor="#909090"
-                custom:titleSize="17sp"
-                custom:titleBackgroundColor="#8DEEEE"
-                custom:titleText="mon" />
+            <TextView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:text="Mon"
+                android:textAllCaps="true"
+                android:textColor="#909090"
+                android:background="@drawable/circle"
+                />
 
         </LinearLayout>
 
@@ -234,7 +236,9 @@
                 android:gravity="center"
                 android:text="tue"
                 android:textAllCaps="true"
-                android:textColor="#909090" />
+                android:textColor="#909090"
+                android:background="@drawable/circle"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -255,7 +259,8 @@
                 android:gravity="center"
                 android:text="thu"
                 android:textAllCaps="true"
-                android:textColor="#909090" />
+                android:textColor="#909090"
+                android:background="@drawable/circle"/>
         </LinearLayout>
 
         <LinearLayout
@@ -276,7 +281,8 @@
                 android:gravity="center"
                 android:text="fri"
                 android:textAllCaps="true"
-                android:textColor="#909090" />
+                android:textColor="#909090"
+                android:background="@drawable/circle"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
