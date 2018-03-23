@@ -1,5 +1,8 @@
-# Assignment
+﻿# Assignment
 王丹 20151631
+
+
+![Weather](display/update.gif)
 ## Step1:adding the new icon to the application
 ### 1.
 ![avatar](f:/4.png)
@@ -209,7 +212,8 @@ Button refresh_but = (Button) findViewById(R.id.update);
                 myCity.setText("重庆");
                 new DownloadUpdate().execute();
                 //wendu.setText("19");
-                Toast.makeText(MainActivity.this, "Update successfully", Toast.LENGTH_SHORT).show();
+    
+            Toast.makeText(MainActivity.this, "Update successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
